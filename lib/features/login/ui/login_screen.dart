@@ -2,10 +2,9 @@ import 'package:doctor_appointment_app/core/helpers/spacing.dart';
 import 'package:doctor_appointment_app/core/theming/colors.dart';
 import 'package:doctor_appointment_app/core/theming/styles.dart';
 import 'package:doctor_appointment_app/core/widgets/app_text_button.dart';
-import 'package:doctor_appointment_app/features/login/data/models/login_request_body.dart';
 import 'package:doctor_appointment_app/features/login/logic/cubit/login_cubit.dart';
 import 'package:doctor_appointment_app/features/login/ui/widgets/accounts_for_sign_up.dart';
-import 'package:doctor_appointment_app/features/login/ui/widgets/already_have_account_text.dart';
+import 'package:doctor_appointment_app/features/login/ui/widgets/dont_have_account_text.dart';
 import 'package:doctor_appointment_app/features/login/ui/widgets/email_and_password.dart';
 import 'package:doctor_appointment_app/features/login/ui/widgets/login_bloc_listener.dart';
 import 'package:doctor_appointment_app/features/login/ui/widgets/or_sign_in_with_widget.dart';
@@ -28,12 +27,12 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Welcome Back", style: TextStyles.font24BlueBold),
-                verticalSpacing(5),
+                verticalSpacing(8),
                 Text(
                   "We're excited to have you back, can't wait to\nsee what you've been up to since you last \nlogged in.",
                   style: TextStyles.font14GrayRegular.copyWith(height: 1.5.h),
                 ),
-                verticalSpacing(15),
+                verticalSpacing(36),
                 Column(
                   children: [
                     const EmailAndPassword(),
@@ -71,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    verticalSpacing(10),
+                    verticalSpacing(40),
                     AppTextButton(
                       buttonText: "Login",
                       textStyle: TextStyles.font16WhiteSemiBold,
@@ -83,10 +82,10 @@ class LoginScreen extends StatelessWidget {
                     const OrSignInWith(),
                     verticalSpacing(15),
                     const AccountsForSignUp(),
-                    verticalSpacing(20),
+                    verticalSpacing(16),
                     const TermsAndConditionsText(),
-                    verticalSpacing(10),
-                    const AlreadyHaveAccountText(),
+                    verticalSpacing(30),
+                    const DontHaveAccountText(),
                     const LoginBlocListener(),
                   ],
                 )
@@ -100,12 +99,7 @@ class LoginScreen extends StatelessWidget {
 
   void validateThenDoLogin(BuildContext context) {
     if (context.read<LoginCubit>().formKey.currentState!.validate()) {
-      context.read<LoginCubit>().emitLoginStates(
-            LoginRequestBody(
-              email: context.read<LoginCubit>().emailController.text,
-              password: context.read<LoginCubit>().passwordController.text,
-            ),
-          );
+      context.read<LoginCubit>().emitLoginStates();
     }
   }
 }
